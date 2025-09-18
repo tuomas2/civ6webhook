@@ -1,17 +1,23 @@
 import os
+import sys
 from flask import Flask, request, jsonify
 import requests
+import logging
 
 app = Flask(__name__)
+
+# Configure logging to ensure output goes to stdout
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', stream=sys.stdout)
 
 PUSHOVER_URL = 'https://api.pushover.net/1/messages.json'
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
+    logging.info("Webhook endpoint called")
     data = request.get_json()
 
     # Log the full POST message content
-    print(f"Received POST data: {data}")
+    logging.info(f"Received POST data: {data}")
 
     if not data:
         return jsonify({'error': 'Invalid JSON'}), 400
