@@ -21,7 +21,16 @@ def webhook():
     if not data:
         return jsonify({'error': 'Invalid JSON'}), 400
     
-    message = data.get('message', 'No message provided')
+    value1 = data.get('value1')
+    value2 = data.get('value2')
+    value3 = data.get('value3')
+    
+    if not value1 or not value2 or not value3:
+        return jsonify({'error': 'Missing required fields: value1, value2, value3'}), 400
+    
+    # Construct a user-friendly message
+    message = f"It's your turn in {value1} as {value2}. Current turn: {value3}"
+    
     token = os.getenv('PUSHOVER_TOKEN')
     user = os.getenv('PUSHOVER_USER')
     
