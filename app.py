@@ -13,7 +13,6 @@ PUSHOVER_URL = 'https://api.pushover.net/1/messages.json'
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    logging.info("Webhook endpoint called")
     data = request.get_json()
 
     # Log the full POST message content
